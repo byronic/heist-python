@@ -46,6 +46,19 @@ class Map(object):
 			'library': [ 'electrical room', 'upstairs landing' ],
 			'electrical room': [ 'library' ]
 			} # end self.links
+		self.game_over = """
+You were arrested!
+Game over.
+"""
+		self.game_win = """
+With a sigh of relief, you drive away.
+The statuette is safely tucked in your coat,
+a comforting lump despite it occasionally 
+digging into your ribs.
+
+You have completed the heist!
+"""
+	# end def __init__(self)
 
 # TODO: Add the actual code for this (and call from opening_scene()) or remove entirely
 	def change_scene(self, scene_name):
@@ -65,6 +78,15 @@ class Map(object):
 				return "pause"
 			elif result == "error":
 				return "error"
+			elif result == "game_over":
+				print self.game_over
+				print "\nPress <RETURN> after you swallow your shame.\n\n"
+				raw_input()
+				return "done"
+			elif result == "game_win":
+				print self.game_win
+				print "\nPress <RETURN> when you are done basking.\n\n"
+				raw_input()
 			else: # we were told to go somewhere
 			      # TODO: you could conceivably put this into change_scene
 				if result == "back":
