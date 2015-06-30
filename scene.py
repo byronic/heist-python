@@ -22,9 +22,11 @@ class Scene(object):
 
 # the decision was made to store important game parameters 
 #   in a dict game_objects
+# start is the main() style entry point for a scene
 	def start(self, game_objects):
 		print "The start method for this scene is not yet implemented."
 		print "received game_objects ", game_objects
+		return "error"
 
 # when we call the go menu, we have to reference many things
 #   including the last room, and that requires passing up
@@ -36,10 +38,8 @@ class Scene(object):
 		print "CANCEL"
 		while True:
 			inp = raw_input(">").lower()   #always lower the input case
-			if inp == "back":
-				return "go_back"
-			elif inp == "cancel":
-				return "cancel"
+			if inp == "back" or inp == "cancel":
+				return inp
 			else:
 				for i in game_objects['go']:
 					if inp == i:
