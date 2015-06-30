@@ -1,13 +1,13 @@
-from entrancehall import EntranceHall
-from billiardroom import BilliardRoom
-from outside import Outside
-from upstairslanding import UpstairsLanding
-from ballroom import Ballroom
-from kitchen import Kitchen
-from study import Study
-from bedrooms import Bedrooms
-from library import Library
-from electricalroom import ElectricalRoom
+from rooms.entrancehall import EntranceHall
+from rooms.billiardroom import BilliardRoom
+from rooms.outside import Outside
+from rooms.upstairslanding import UpstairsLanding
+from rooms.ballroom import Ballroom
+from rooms.kitchen import Kitchen
+from rooms.study import Study
+from rooms.bedrooms import Bedrooms
+from rooms.library import Library
+from rooms.electricalroom import ElectricalRoom
 
 class Map(object):
 	def __init__(self):

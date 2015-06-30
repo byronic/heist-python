@@ -1,7 +1,9 @@
+# CODE COMPLETE.
+
 #
 #    Heist
 #     1.0
-
+#
 # a game by eth0
 # part of Learn Python the Hard Way, but custom written
 
