@@ -20,7 +20,7 @@ class Engine(object):
 			if self.state == "main_menu":
 				self.state = self.main_menu()
 			elif self.state == "new_game":
-				pass
+				self.new_game()
 			elif self.state == "load_game":
 				pass
 			elif self.state == "exit":
@@ -49,17 +49,34 @@ class Engine(object):
 		pass
 
 	def new_game(self):
-		pass
+		# Generate a map, and begin.
+		game_map = Map()
+		while True:
+			result = game_map.opening_scene()
+			if result == "pause":
+				result = self.in_game_menu()
+				if result == "save_game":
+					pass
+				elif result == "quit_game":
+					self.state = "main_menu"
+					return
+			elif result == "done":
+				self.state = "main_menu"
+				return
+			
 
 	def in_game_menu(self):
 		while True:
 			print "Heist - Paused"
-			print "1. Save Game"
-			print "2. Quit and Return to Menu"
+			print "1. Continue"
+			print "2. Save Game"
+			print "3. Quit Game"
 			inp = raw_input("> ")
 			if inp == "1":
-				return "save_game"
+				return "continue"
 			elif inp == "2":
+				return "save_game"
+			elif inp == "3":
 				return "quit_game"
 			else:
-				print "Sorry, I didn't understand. Choose either 1, 2, or 3."
+				print "Sorry, I didn't understand. Choose either 1, 2 or 3."

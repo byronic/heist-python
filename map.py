@@ -14,7 +14,8 @@ class Map(object):
 		self.game_objects = {
 			'power': True,
 			'go': [],
-			'turn': 0
+			'turn': 0,
+			'heist complete': False
 			} # end self.game_objects
 		self.current_scene = 'entrance hall'
 		self.last_scene = 'none'
@@ -59,7 +60,7 @@ class Map(object):
 			# TODO: missing handling for sap, use, pick lock, and steal
 			result = self.scenes[self.current_scene].start(self.game_objects)
 			if result == "wait":
-				turn += 1
+				self.game_objects['turn'] += 1
 			elif result == "pause":
 				return "pause"
 			elif result == "error":
