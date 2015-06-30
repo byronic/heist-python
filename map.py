@@ -1,6 +1,11 @@
 class Map(object):
 	def __init__(self):
-		pass
+		self.game_objects = {
+			'power': True,
+			'go': [],
+			} # end self.game_objects
+		self.current_scene = 'none'
+		self.last_scene = 'none'
 
 	def change_scene(self, scene_name):
 		pass
