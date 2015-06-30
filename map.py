@@ -3,6 +3,11 @@ from billiardroom import BilliardRoom
 from outside import Outside
 from upstairs import Upstairs
 from ballroom import Ballroom
+from kitchen import Kitchen
+from study import Study
+from bedrooms import Bedrooms
+from library import Library
+from electricalroom import ElectricalRoom
 
 class Map(object):
 	def __init__(self):
@@ -18,7 +23,13 @@ class Map(object):
 			'outside': Outside(),
 			'billiard room': BilliardRoom(),
 			'upstairs': Upstairs(),
-			'ballroom': Ballroom()
+			'ballroom': Ballroom(),
+			'study': Study(),
+			'kitchen': Kitchen(),
+			'upstairs': Upstairs(),
+			'bedrooms': Bedrooms(),
+			'library': Library(),
+			'electrical room': ElectricalRoom()
 			}
 
 	def change_scene(self, scene_name):
@@ -53,7 +64,12 @@ class Map(object):
 	def set_links(self):
 		if self.current_scene == "entrance hall":
 			self.game_objects['go'] = [ 'outside', 'billiard room', 'upstairs', 'ballroom']
+		#elif self.current_scene == "
 		# TODO: a whole lot more of this to write
+		# TODO: Should this just be a dict with arrays inside per room? so we would
+		#     call go_dict[current_scene] to get the list of stuff? instead of 
+		#     nested if-else?       -- I think the answer to this is an obvious yes
+		#       so TODO: change it
 
 # TODO: necessary?
 	def closing_scene(self):
