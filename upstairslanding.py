@@ -1,5 +1,5 @@
 from scene import Scene
 
-class Upstairs(Scene):
+class UpstairsLanding(Scene):
 	def __init__(self):
 		pass

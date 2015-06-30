@@ -1,7 +1,7 @@
 from entrancehall import EntranceHall
 from billiardroom import BilliardRoom
 from outside import Outside
-from upstairs import Upstairs
+from upstairslanding import UpstairsLanding
 from ballroom import Ballroom
 from kitchen import Kitchen
 from study import Study
@@ -22,16 +22,31 @@ class Map(object):
 			'entrance hall': EntranceHall(),
 			'outside': Outside(),
 			'billiard room': BilliardRoom(),
-			'upstairs': Upstairs(),
+			'upstairs landing': UpstairsLanding(),
 			'ballroom': Ballroom(),
 			'study': Study(),
 			'kitchen': Kitchen(),
-			'upstairs': Upstairs(),
 			'bedrooms': Bedrooms(),
 			'library': Library(),
 			'electrical room': ElectricalRoom()
 			}
+		# these are the links for all the rooms --
+		#    meaning a hashtable of arrays containing the possible 
+		#    destinations to 'go' when in the hash'd room
+		self.links = {
+			'entrance hall': [ 'outside', 'billiard room', 'upstairs landing', 'ballroom' ],
+			'outside': [ 'entrance hall' ],
+			'billiard room': [ 'study', 'kitchen', 'entrance hall' ],
+			'upstairs landing': [ 'entrance hall', 'library', 'bedrooms' ],
+			'ballroom': [ 'entrance hall' ],
+			'study': [ 'billiard room' ],
+			'kitchen': [ 'billiard room' ],
+			'bedrooms': [ 'upstairs landing' ],
+			'library': [ 'electrical room', 'upstairs landing' ],
+			'electrical room': [ 'library' ]
+			} # end self.links
 
+# TODO: Add the actual code for this (and call from opening_scene()) or remove entirely
 	def change_scene(self, scene_name):
 		pass
 
@@ -62,14 +77,7 @@ class Map(object):
 
 # This initializes the game_objects['go'] array based on the self.current_scene
 	def set_links(self):
-		if self.current_scene == "entrance hall":
-			self.game_objects['go'] = [ 'outside', 'billiard room', 'upstairs', 'ballroom']
-		#elif self.current_scene == "
-		# TODO: a whole lot more of this to write
-		# TODO: Should this just be a dict with arrays inside per room? so we would
-		#     call go_dict[current_scene] to get the list of stuff? instead of 
-		#     nested if-else?       -- I think the answer to this is an obvious yes
-		#       so TODO: change it
+		self.game_objects['go'] = self.links[self.current_scene]
 
 # TODO: necessary?
 	def closing_scene(self):
