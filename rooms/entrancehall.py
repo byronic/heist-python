@@ -43,14 +43,25 @@ The billiard room lies through the west door.
 						return result
 				elif inp == "steal":
 					# the power is on and you tried to steal!
-					print "Steal with power = game over" # TODO - rewrite this description
+					print """
+Despite the vast amounts of light bathing the room,
+you begin pilfering pieces of art from the wall.
+
+There are over ninety witnesses to your ill-conceived
+crime. You are arrested!
+""" # This is why you don't steal things while the lights are on.
 					return "game_over"
 				elif inp == "pick lock":
 					print "No locks to pick."
 				elif inp == "use":
 					print "There's nothing to use here."
 				elif inp == "sap":
-					print "Sap w/multiple people in room = game over" # TODO - rewrite this description
+					print """
+Coldly, you walk straight to the nearest patron and punch him (or her)
+directly in the mouth.
+
+In retrospect, this was a very poor decision.
+"""
 					return "game_over"
 				elif inp == "wait":
 					print "You loiter in the room, ostensibly admiring the art."
@@ -71,14 +82,24 @@ The billiard room lies through the west door.
 					if result != "cancel":
 						return result
 				elif inp == "steal":
-					# the power is on and you tried to steal!
-					print "Steal without power, you did it!" # TODO - rewrite this description and return a value for Map to successfully update params
+					# the power is off, you can do it!
+					print """
+You painstakingly pickpocket every guest in the room,
+under the cover of darkness.
+
+Excellent work!
+"""
+					return "wait" # to increment the clock
 				elif inp == "pick lock":
 					print "No locks to pick."
 				elif inp == "use":
 					print "There's nothing to use here."
 				elif inp == "sap":
-					print "Sap while it's dark? Sure, whatever." # TODO - rewrite this description and return a value for Map to successfully update params
+					print """
+You knock out the doorman.
+What a senseless use of violence.
+""" 
+					return "wait"
 				elif inp == "wait":
 					print "You hang about in the darkened room, blending in with the crowd."
 					return "wait"

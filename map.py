@@ -80,7 +80,7 @@ You have completed the heist!
 				return "error"
 			elif result == "game_over":
 				print self.game_over
-				print "\nPress <RETURN> after you swallow your shame.\n\n"
+				print "\nPress <RETURN> after you swallow your shame.",
 				raw_input()
 				return "done"
 			elif result == "game_win":
@@ -89,6 +89,7 @@ You have completed the heist!
 				raw_input()
 			else: # we were told to go somewhere
 			      # TODO: you could conceivably put this into change_scene
+				self.game_objects['turn'] += 1
 				if result == "back":
 					if self.last_scene != "none":
 						temp = self.last_scene
