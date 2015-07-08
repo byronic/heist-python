@@ -15,7 +15,8 @@ class Map(object):
 			'power': True,
 			'go': [],
 			'turn': 0,
-			'heist complete': False
+			'heist complete': False,
+			'guards': 0    # the number of guards in the room we're entering
 			} # end self.game_objects
 		self.current_scene = 'entrance hall'
 		self.last_scene = 'none'
@@ -46,6 +47,16 @@ class Map(object):
 			'library': [ 'electrical room', 'upstairs landing' ],
 			'electrical room': [ 'library' ]
 			} # end self.links
+		# for the guards,
+		#  each room has a number of guards based on the turn
+		self.guard_paths = {
+			'library': [2, 1, 0, 0],
+			'upstairs landing': [1, 2, 1, 2],
+			'bedrooms': [0, 0, 2, 1],
+			'study': [0, 0, 0, 1],
+			'billiard room': [1, 0, 1, 0],
+			'kitchen': [0, 1, 0, 0]
+			} # end self.guard_paths
 		self.game_over = """
 You were arrested!
 Game over.
@@ -74,6 +85,18 @@ You have completed the heist!
 			result = self.scenes[self.current_scene].start(self.game_objects)
 			if result == "wait":
 				self.game_objects['turn'] += 1
+				# anytime the turn number goes up, we must move the guards
+				self.move_guards()
+				# TODO: ^^ to clean up turn/guard movement, 
+				#    maybe make a turn increment function that calls everything?
+			# adding sap logic here
+			elif result == "sap":
+				# successful saps always take out the lone guard
+				for i in range(0, len(self.guard_paths[self.current_scene])):
+					if self.guard_paths[self.current_scene][i] == 1:
+						self.guard_paths[self.current_scene][i] = 0
+				self.game_objects['turn'] += 1
+				self.move_guards()
 			elif result == "pause":
 				return "pause"
 			elif result == "error":
@@ -98,10 +121,24 @@ You have completed the heist!
 				else:
 					self.last_scene = self.current_scene
 					self.current_scene = result
+				# move the guards after we change rooms!
+				self.move_guards()
 
 # This initializes the game_objects['go'] array based on the self.current_scene
 	def set_links(self):
 		self.game_objects['go'] = self.links[self.current_scene]
+
+# This calculates the number guards based on the current room
+#    then puts that value into self.game_objects['guards']
+	def move_guards(self):
+		# this scary bit of code is actually necessary due to math;
+		# although we could presume that len(self.guard_paths[self.current_scene]) is always
+		# equal to four, it's better to calculate it
+		try:
+			self.game_objects['guards'] = self.guard_paths[self.current_scene][self.game_objects['turn'] % len(self.guard_paths[self.current_scene])]
+		# The exception is necessary when the current scene does not exist; no action necessary
+		except:
+			pass
 
 # TODO: necessary?
 	def closing_scene(self):

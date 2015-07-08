@@ -1,5 +1,7 @@
 from scene import Scene
 
+# TODO: fix the spacing on the two-guard game over on sap
+
 class UpstairsLanding(Scene):
 	def __init__(self):
 		self.description_power = """
@@ -28,10 +30,12 @@ The bedrooms lie to the east.
 The library lies to the west.
 The stairs leading down to the entrance hall are here.
 """
+		# self.guards[] has descriptions for 0 guards, 1 guard, and 2 guards in this room
+		self.guards = [ "", "A lone guard patrols here.", "Two guards scan the area as they walk." ]
 	def start(self, game_objects):
 		if game_objects["power"] == True:
 			print self.description_power
-			# TODO: guard logic here
+			print self.guards[game_objects['guards']]
 			while True:
 				inp = self.action_menu()
 #"Go   Steal   Pick Lock   Use   Sap   Look   Wait   Menu" 
@@ -56,20 +60,35 @@ You are arrested!
 				elif inp == "use":
 					print "There's nothing to use here."
 				elif inp == "sap":
-					print " This hasn't been implemented because guard logic doesn't exist yet." #TODO
-					return "game_over"
+					if game_objects['guards'] == 1:
+						print "You handily knock out the guard and drag him behind the stone bust."
+						return "sap"
+					elif game_objects['guards'] > 1:
+						print "You have just enough time to punch out one guard before the other draws a gun. Oh dear."
+						print "The gun barrel jams roughly at the base of your neck. You raise your hands in the air."
+						return "game_over"
+					else:
+						print "You look about for someone to take your rage out on."
+						print "Sadly, you are alone."
 				elif inp == "wait":
 					print "You loiter in the room, ostensibly admiring the art."
-					print "There might need to be guard logic here." #TODO
+					if game_objects['guards'] > 0:
+						print "A guard eyes you suspiciously. Sweating, you continue"
+						print "to admire the art -- to no avail! You are recognized."
+						print "The guard snaps your hands into a pair of cuffs."
+						print "\nAh, the perils of infamy."
+						return "game_over"
 					return "wait"
 				elif inp == "menu":
 					return "pause"
 				elif inp == "look":
 					print self.description_power
+					print self.guards[game_objects['guards']]
 				else:
 					print "I'm not sure what you meant by that."
 		elif game_objects["power"] == False:
 			print self.description_no_power
+			print self.guards[game_objects['guards']]
 			while True:
 				inp = self.action_menu()
 #"Go   Steal   Pick Lock   Use   Sap   Look   Wait   Menu" 
@@ -92,17 +111,24 @@ the upstairs guards. Life without power is so liberating.
 				elif inp == "use":
 					print "There's nothing to use here."
 				elif inp == "sap":
-					print """
-You knock out a guard.
-What a senseless use of violence.
-"""  #TODO : guard logic should go here
+					if game_objects['guards'] == 1:
+						print "You handily knock out the guard and drag him behind the stone bust."
+						return "sap"
+					elif game_objects['guards'] > 1:
+						print "You have just enough time to punch out one guard before the other draws a gun. Oh dear."
+						print "The gun barrel jams roughly at the base of your neck. You raise your hands in the air."
+						return "game_over"
+					else:
+						print "You look about for someone to take your rage out on."
+						print "Sadly, you are alone."
 					return "wait"
 				elif inp == "wait":
-					print "You hang about in the darkened room, blending in with the crowd."
+					print "You grip the staircase railing and blend into the shadows."
 					return "wait"
 				elif inp == "menu":
 					return "pause"
 				elif inp == "look":
 					print self.description_no_power
+					print self.guards[game_objects['guards']]
 				else:
 					print "I'm not sure what you meant by that."
